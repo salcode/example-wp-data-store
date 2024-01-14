@@ -20,3 +20,26 @@ namespace salcode\ExampleWpDataStore;
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
+
+function register_assets() {
+	$asset_file = include plugin_dir_path( __FILE__ ) . 'build/index.asset.php';
+
+	wp_register_script(
+		'example-wp-data-store',
+		plugins_url( 'build/index.js', __FILE__ ),
+		$asset_file['dependencies'],
+		$asset_file['version'],
+		true
+	);
+}
+
+function enqueue_editor_assets() {
+	wp_enqueue_script( 'example-wp-data-store' );
+}
+
+add_action('plugins_loaded', function() {
+	load_plugin_textdomain( 'example-wp-data-store', false, __DIR__ );
+});
+
+add_action( 'init', __NAMESPACE__ . '\register_assets' );
+add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\enqueue_editor_assets' );
