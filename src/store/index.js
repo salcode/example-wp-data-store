@@ -9,8 +9,11 @@ const defaultState = [];
 
 const actions = {};
 const reducer = () => [];
-const selectors = {};
-
+const selectors = {
+  getItems( state ) {
+    return state;
+  }
+};
 
 register(
   createReduxStore(
